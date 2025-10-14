@@ -1,0 +1,22 @@
+public class Main {
+    public static boolean isMatch(String s, String p) {
+        if (p.isEmpty()) return s.isEmpty();
+        boolean firstMatch = (!s.isEmpty() &&
+            (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.'));
+        if (p.length() >= 2 && p.charAt(1) == '*') {
+            return (isMatch(s, p.substring(2)) ||
+                    (firstMatch && isMatch(s.substring(1), p)));
+        } else {
+            return firstMatch && isMatch(s.substring(1), p.substring(1));
+        }
+    }
+
+    public static void main(String[] args) {
+        String s1 = "aa", p1 = "a";
+        String s2 = "aa", p2 = "a*";
+        String s3 = "ab", p3 = ".*";
+        System.out.println(isMatch(s1, p1)); // false
+        System.out.println(isMatch(s2, p2)); // true
+        System.out.println(isMatch(s3, p3)); // true
+    }
+}
