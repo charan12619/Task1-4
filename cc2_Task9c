@@ -1,0 +1,25 @@
+import java.util.*;
+
+public class Main {
+    public static List<Integer> sequentialDigits(int low, int high) {
+        List<Integer> result = new ArrayList<>();
+        for (int len = String.valueOf(low).length(); len <= String.valueOf(high).length(); len++) {
+            for (int start = 1; start <= 9; start++) {
+                int num = 0, next = start, cnt = len;
+                while (cnt-- > 0 && next < 10) {
+                    num = num * 10 + next++;
+                }
+                if (String.valueOf(num).length() != len) continue;
+                if (num >= low && num <= high) result.add(num);
+            }
+        }
+        Collections.sort(result);
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int low = 100, high = 300;
+        List<Integer> out = sequentialDigits(low, high);
+        System.out.println(out); // Output: [123, 234]
+    }
+}
