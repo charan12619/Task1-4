@@ -1,0 +1,34 @@
+import java.util.*;
+
+public class Main {
+    private static final String[] mapping = {
+            "",    "",    "abc", "def", "ghi", "jkl",
+            "mno", "pqrs", "tuv", "wxyz"
+    };
+
+    public static List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+        if (digits == null || digits.length() == 0) return result;
+        backtrack(result, new StringBuilder(), digits, 0);
+        return result;
+    }
+
+    private static void backtrack(List<String> result, StringBuilder comb, String digits, int idx) {
+        if (idx == digits.length()) {
+            result.add(comb.toString());
+            return;
+        }
+        String possible = mapping[digits.charAt(idx) - '0'];
+        for (char c : possible.toCharArray()) {
+            comb.append(c);
+            backtrack(result, comb, digits, idx + 1);
+            comb.deleteCharAt(comb.length() - 1);
+        }
+    }
+
+    public static void main(String[] args) {
+        String input = "23";
+        List<String> combs = letterCombinations(input);
+        System.out.println(combs); // Output: [ad, ae, af, bd, be, bf, cd, ce, cf]
+    }
+}
