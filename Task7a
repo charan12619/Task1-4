@@ -1,0 +1,36 @@
+public class Main {
+    static class TreeNode {
+        int val;
+        TreeNode left, right;
+        TreeNode(int val) { this.val = val; }
+    }
+
+    static int maxLength = 0;
+    public static int longestUnivaluePath(TreeNode root) {
+        maxLength = 0;
+        dfs(root);
+        return maxLength;
+    }
+
+    private static int dfs(TreeNode node) {
+        if (node == null) return 0;
+        int left = dfs(node.left);
+        int right = dfs(node.right);
+        int leftExtend = 0, rightExtend = 0;
+        if (node.left != null && node.left.val == node.val) leftExtend = left + 1;
+        if (node.right != null && node.right.val == node.val) rightExtend = right + 1;
+        maxLength = Math.max(maxLength, leftExtend + rightExtend);
+        return Math.max(leftExtend, rightExtend);
+    }
+
+    public static void main(String[] args) {
+        // Example 1
+        TreeNode root = new TreeNode(2);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(2);
+        root.left.right = new TreeNode(2);
+        // Output: 3
+        System.out.println("Longest Univalue Path Length = " + longestUnivaluePath(root));
+    }
+}
